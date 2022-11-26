@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/utils/weather_service.dart';
 
 class LocationScreen extends StatefulWidget {
-  const LocationScreen({Key? key}) : super(key: key);
+  final WeatherData weatherData;
+  const LocationScreen({Key? key, required this.weatherData}) : super(key: key);
 
   @override
   State<LocationScreen> createState() => _LocationScreenState();
@@ -25,29 +27,47 @@ class _LocationScreenState extends State<LocationScreen> {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Icon(
+              children: [
+                const Icon(
                   CupertinoIcons.location_fill,
                   size: 35,
                 ),
-                Icon(
-                  Icons.location_city,
-                  size: 35,
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(
+                    Icons.location_city,
+                    size: 35,
+                  ),
                 ),
               ],
             ),
-            const Text(
-              '12° ☔',
-              style: TextStyle(
-                  color: Colors.white,
-                  decoration: TextDecoration.none,
-                  fontSize: 70,
-                  fontWeight: FontWeight.w900),
-              textAlign: TextAlign.start,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Text(
+                  '${widget.weatherData.temp.toInt().toString()}°',
+                  style: const TextStyle(
+                      color: Colors.white,
+                      decoration: TextDecoration.none,
+                      fontSize: 70,
+                      fontWeight: FontWeight.w900),
+                  textAlign: TextAlign.start,
+                ),
+                Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              'https:${widget.weatherData.conditionIconUrl}'),
+                          fit: BoxFit.fill)),
+                )
+              ],
             ),
-            const Text(
-              'Bring a 🧥 just in case in Cupertino!',
-              style: TextStyle(
+            Text(
+              '${widget.weatherData.getMessage()} ${widget.weatherData.location}!',
+              style: const TextStyle(
                   color: Colors.white,
                   decoration: TextDecoration.none,
                   fontWeight: FontWeight.bold),

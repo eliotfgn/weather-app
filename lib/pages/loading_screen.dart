@@ -34,9 +34,15 @@ class _LoadingScreenState extends State<LoadingScreen> {
         permission == LocationPermission.whileInUse) {
       Geolocator.getCurrentPosition().then((value) {
         position = value;
-        WeatherService.getWeatherForLocation(position).then((value) =>
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => LocationScreen())));
+        WeatherService.getWeatherForLocation(position).then((value) {
+          WeatherData weatherData = WeatherService.getWeatherData(value);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => LocationScreen(
+                        weatherData: weatherData,
+                      )));
+        });
       });
     }
   }
