@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/pages/loading_screen.dart';
 
 void main() {
   runApp(App());
@@ -16,6 +17,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
+      home: const LoadingScreen(),
     );
   }
 }
