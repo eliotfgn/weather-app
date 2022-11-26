@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/pages/loading_screen.dart';
 
 void main() {
-  runApp(App());
+  runApp(const App());
 }
 
 class App extends StatefulWidget {

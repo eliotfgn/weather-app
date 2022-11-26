@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/pages/location_screen.dart';
+import 'package:weather_app/utils/weather_service.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({Key? key}) : super(key: key);
@@ -31,8 +32,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
     if (permission == LocationPermission.always ||
         permission == LocationPermission.whileInUse) {
-      Geolocator.getCurrentPosition().then((value) => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LocationScreen())));
+      Geolocator.getCurrentPosition().then((value) {
+        position = value;
+        WeatherService.getWeatherForLocation(position).then((value) =>
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => LocationScreen())));
+      });
     }
   }
 
